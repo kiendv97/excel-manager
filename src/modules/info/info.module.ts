@@ -7,6 +7,7 @@ import { InfoSchema } from './info.schema';
 @Module({
   providers: [InfoService],
   controllers: [InfoController],
+  exports: [InfoService],
   imports: [MongooseModule.forFeature([{name: 'info', schema: InfoSchema}])]
 })
 export class InfoModule {}

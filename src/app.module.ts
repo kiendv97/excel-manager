@@ -5,15 +5,23 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { FilepathModule } from './modules/filepath/filepath.module';
 import { FilepathController } from './modules/filepath/filepath.controller';
 import { InfoModule } from './modules/info/info.module';
-import { ScheduleModule } from "@nestjs/schedule";
+import { ScheduleModule } from '@nestjs/schedule';
 import { CronService } from './modules/cron/cron.service';
+import { ConfigModule } from '@nestjs/config';
+import { CronModule } from './modules/cron/cron.module';
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://localhost:27017/excel'),
-  ScheduleModule.forRoot(),
+  imports: [
+    ScheduleModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    MongooseModule.forRoot(process.env.DB_HOST),
     FilepathModule,
-    InfoModule],
+    InfoModule,
+    CronModule,
+  ],
   controllers: [AppController, FilepathController],
   providers: [AppService, CronService],
-
+  exports: [FilepathModule, InfoModule],
 })
-export class AppModule { }
+export class AppModule {}
