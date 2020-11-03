@@ -11,7 +11,7 @@ export class CreateInfoDto {
   @IsNotEmpty()
   text: String;
   @IsNotEmpty()
-  date: Date;
+  date: String;
   @IsNotEmpty()
   attachments: Array<Object>;
 }

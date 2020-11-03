@@ -3,6 +3,6 @@ export interface IInfoMail {
     sender: String
     subject: String
     text: String
-    date: Date
+    date: String
     attachments: Array<Object>
 }
