@@ -5,7 +5,7 @@ const fs = require('fs');
 import { IInfoMail } from './cron.interface';
 import { CreateInfoDto } from '../info/dto/create-info.dto';
 import { simpleParser } from 'mailparser';
-
+const md5 = require('md5');
 @Injectable()
 export class CronService {
   public urlPathGet: any = process.env.PATH_EMAILNEW;
@@ -25,31 +25,27 @@ export class CronService {
           receiver: '',
           text: '',
           subject: '',
-          date: new Date(),
+          date: '',
           attachments: [],
         };
         if (err) return;
-        outputMail.sender = parsed.from ? parsed.from.text : '';
-        outputMail.receiver = parsed.to ? parsed.to.text : '';
+        outputMail.sender = parsed.from?.value[0]?.address || '';
+        outputMail.receiver = parsed.to?.text || '';
         outputMail.text = parsed.text;
         outputMail.subject = parsed.subject;
         outputMail.date = parsed.date;
         for (let att = 0; att < parsed.attachments.length; att++) {
-            const attachment = parsed.attachments[att];
-            outputMail.attachments.push(attachment.filename);
-            let nameFile = attachment.filename;
-            let timeFile = `${new Date(parsed.date).getMonth() + 1}${new Date(
-              parsed.date,
-            ).getFullYear()}`;
-            console.log(parsed.date);
-            
-            let sliceName = outputMail.sender.split(/\s|<|>/).join('');
-            let folder = `${this.urlPathSave}/${timeFile}`;
-            if (!fs.existsSync(folder)) fs.mkdirSync(folder);
-            fs.writeFileSync(
-              `${folder}/${sliceName} - ${nameFile}`,
-              attachment.content,
-            );
+          const attachment = parsed.attachments[att];
+          outputMail.attachments.push(`${md5(parsed.date)}.xlsx`);
+          let timeFile = `${new Date(parsed.date).getMonth() + 1}${new Date(
+            parsed.date,
+          ).getFullYear()}`;
+          let folder = `${this.urlPathSave}/${timeFile}`;
+          if (!fs.existsSync(folder)) fs.mkdirSync(folder);
+          fs.writeFileSync(
+            `${folder}/${md5(parsed.date)}.xlsx`,
+            attachment.content,
+          );
         }
         // Lưu vào db đường dẫn và text
         await this.infoService.createInfo(this.builderInfoDto(outputMail));
@@ -64,7 +60,7 @@ export class CronService {
       receiver: '',
       text: '',
       subject: '',
-      date: new Date(),
+      date: '',
       attachments: [],
     };
     builder.sender = info.sender;
