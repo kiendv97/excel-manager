@@ -9,6 +9,8 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { CronService } from './modules/cron/cron.service';
 import { ConfigModule } from '@nestjs/config';
 import { CronModule } from './modules/cron/cron.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
 @Module({
   imports: [
     ScheduleModule.forRoot(),
@@ -19,6 +21,8 @@ import { CronModule } from './modules/cron/cron.module';
     FilepathModule,
     InfoModule,
     CronModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController, FilepathController],
   providers: [AppService, CronService],

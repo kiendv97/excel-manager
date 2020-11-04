@@ -49,7 +49,7 @@ export class CronService {
         }
         // Lưu vào db đường dẫn và text
         await this.infoService.createInfo(this.builderInfoDto(outputMail));
-        fs.unlinkSync(`${this.urlPathGet}${file}`);
+        // fs.unlinkSync(`${this.urlPathGet}${file}`);
         console.log('done');
       });
     }

@@ -6,13 +6,20 @@ import { IInfo } from './info.interface';
 
 @Injectable()
 export class InfoService {
-    constructor(@InjectModel('info') private infoModel: Model<IInfo> ) {}
-    async createInfo(createInfoDto: CreateInfoDto): Promise<IInfo> {
-        const createdInfo = new this.infoModel(createInfoDto);
-        return createdInfo.save();
-    }
+  constructor(@InjectModel('info') private infoModel: Model<IInfo>) {}
+  async createInfo(createInfoDto: CreateInfoDto): Promise<IInfo> {
+    const createdInfo = new this.infoModel(createInfoDto);
+    return createdInfo.save();
+  }
 
-    async findAll(): Promise<IInfo[]> {
-        return this.infoModel.find().exec();
+  async findAll(): Promise<IInfo[]> {
+    return this.infoModel.find().exec();
+  }
+  async findOne(id: String): Promise<IInfo> {
+    let info = await this.infoModel.findOne({ _id: id });
+    if (info) {
+      await this.infoModel.updateOne({ _id: id }, { readed: true });
     }
+    return info;
+  }
 }

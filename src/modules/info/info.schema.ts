@@ -27,6 +27,10 @@ const infoSchema = new Schema(
       type: Array,
       default: [],
     },
+    readed: {
+      type: Boolean,
+      default: false
+    }
   },
   {
     timestamps: true,

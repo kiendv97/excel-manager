@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Post, Query, Res } from '@nestjs/common';
 import { InfoService } from './info.service';
 import { CreateInfoDto } from "./dto/create-info.dto";
 @Controller('info')
@@ -18,6 +18,14 @@ export class InfoController {
         return res.status(HttpStatus.OK).json({
             message: 'get lists success',
             data: listInfo
+        })
+    }
+    @Get('/read-info')
+    async getOneInfo(@Res() res, @Query('id') id) {
+        let info = await this.infoService.findOne(id)
+        return res.status(HttpStatus.OK).json({
+            message: 'Get info and read it',
+            data: info
         })
     }
 }
