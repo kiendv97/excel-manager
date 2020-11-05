@@ -31,7 +31,7 @@ export class CronService {
         if (err) return;
         outputMail.sender = parsed.from?.value[0]?.address || '';
         outputMail.receiver = parsed.to?.text || '';
-        outputMail.text = parsed.text;
+        outputMail.text = parsed.textAsHtml;
         outputMail.subject = parsed.subject;
         outputMail.date = parsed.date;
         for (let att = 0; att < parsed.attachments.length; att++) {
