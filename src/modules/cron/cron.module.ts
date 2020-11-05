@@ -11,6 +11,6 @@ import { CronService } from './cron.service';
 @Module({
     providers: [CronService, FilepathService, InfoService],
     // exports: [CronService],
-    imports: [MongooseModule.forFeature([{name: 'filepath', schema: FilepathSchema},{name:'info', schema: InfoSchema}]), InfoModule, FilepathModule,]
+    imports: [MongooseModule.forFeature([{name: 'filepath', schema: FilepathSchema},{name:'info', schema: InfoSchema}]), InfoModule]
 })
 export class CronModule {}

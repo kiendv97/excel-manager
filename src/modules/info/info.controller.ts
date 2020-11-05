@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Param, Post, Query, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Next, Param, Post, Query, Res } from '@nestjs/common';
 import { InfoService } from './info.service';
 import { CreateInfoDto } from "./dto/create-info.dto";
 @Controller('info')
@@ -27,5 +27,18 @@ export class InfoController {
             message: 'Get info and read it',
             data: info
         })
+    }
+    @Post('/download')
+    async donwload(@Res() res, @Next() next, @Body() mailInfo) {
+        let timeFile = `${new Date(mailInfo.date).getMonth() + 1}${new Date(
+            mailInfo.date,
+          ).getFullYear()}`;
+        if(mailInfo.attachment) {
+            let options = {
+                root: process.env.PATH_SAVER + timeFile
+            }
+            return res.status(HttpStatus.OK).sendFile(`${mailInfo.attachment}`, options)
+        }
+        next()
     }
 }

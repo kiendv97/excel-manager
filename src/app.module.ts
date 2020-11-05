@@ -11,6 +11,7 @@ import { ConfigModule } from '@nestjs/config';
 import { CronModule } from './modules/cron/cron.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
+import { InfoController } from './modules/info/info.controller';
 @Module({
   imports: [
     ScheduleModule.forRoot(),
@@ -24,7 +25,7 @@ import { UsersModule } from './modules/users/users.module';
     AuthModule,
     UsersModule,
   ],
-  controllers: [AppController, FilepathController],
+  controllers: [AppController, FilepathController, InfoController],
   providers: [AppService, CronService],
   exports: [FilepathModule, InfoModule],
 })
