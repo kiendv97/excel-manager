@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'BE-EXCEL',
-      script: 'dist/main.js',
+      script: 'yarn start',
   
       // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
       args: 'one two',
