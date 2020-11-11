@@ -12,6 +12,7 @@ import { CronModule } from './modules/cron/cron.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { InfoController } from './modules/info/info.controller';
+import { ExcelModule } from './modules/excel/excel.module';
 @Module({
   imports: [
     ScheduleModule.forRoot(),
@@ -24,6 +25,7 @@ import { InfoController } from './modules/info/info.controller';
     CronModule,
     AuthModule,
     UsersModule,
+    ExcelModule,
   ],
   controllers: [AppController, FilepathController, InfoController],
   providers: [AppService, CronService],
